@@ -5,6 +5,13 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def p4_constraints_deps():
     """Sets up 3rd party workspaces needed to compile p4_constraints."""
+    if not native.existing_rule("com_googlesource_code_re2"):
+        http_archive(
+            name = "com_googlesource_code_re2",
+            url = "https://github.com/google/re2/releases/download/2024-03-01/re2-2024-03-01.tar.gz",
+            strip_prefix = "re2-2024-03-01",
+            sha256 = "7b2b3aa8241eac25f674e5b5b2e23d4ac4f0a8891418a2661869f736f03f57f4",
+        )
     if not native.existing_rule("com_google_absl"):
         git_repository(
             name = "com_google_absl",
@@ -23,13 +30,6 @@ def p4_constraints_deps():
             url = "https://github.com/protocolbuffers/protobuf/releases/download/v22.2/protobuf-22.2.tar.gz",
             strip_prefix = "protobuf-22.2",
             sha256 = "1ff680568f8e537bb4be9813bac0c1d87848d5be9d000ebe30f0bc2d7aabe045",
-        )
-    if not native.existing_rule("com_googlesource_code_re2"):
-        http_archive(
-            name = "com_googlesource_code_re2",
-            url = "https://github.com/google/re2/archive/refs/tags/2023-06-01.tar.gz",
-            strip_prefix = "re2-2023-06-01",
-            sha256 = "8b4a8175da7205df2ad02e405a950a02eaa3e3e0840947cd598e92dca453199b",
         )
     if not native.existing_rule("rules_proto"):
         http_archive(
